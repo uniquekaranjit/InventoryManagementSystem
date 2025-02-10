@@ -1,14 +1,17 @@
 # Inventory Management System
-**Version**: 2.0.0.PHASE2
+**Version**: 2.0.0.PHASE3
 
 ## Overview
 The Inventory Management System is a Python-based application designed to efficiently manage product inventories. The system provides functionalities to **insert**, **delete**, **retrieve**, and **sort** products, ensuring smooth operations for maintaining product data. The core logic of the system is built on two key data structures: an **AVL tree** and a **hash table**, both of which help optimize performance for fast lookups, insertions, deletions, and sorting.
 
-The system supports the following features:
-- **Insert**: Add new products to the inventory with details such as product ID, name, and price.
-- **Delete**: Remove products from the inventory using a unique product ID.
-- **Retrieve**: Retrieve product details based on a given product ID.
-- **Sorting**: Products are automatically sorted based on price using an AVL tree.
+## Features
+- Fast product lookups using partial or complete IDs
+- Price-based range queries and sorting
+- Automatic ID generation using UUIDs
+- Data consistency across data structures
+- Comprehensive input validation
+- Memory-efficient implementation
+- Extensive error handling
 
 ## Project Structure
 
@@ -25,11 +28,24 @@ This file contains the **hash table** implementation used for quick lookups, ins
 ### `main.py`
 The main driver code of the application, where the inventory management system is executed. This file initializes the inventory, performs the insert, delete, and retrieve operations, and interacts with the AVL tree and hash table.
 
-### `requirements.txt`
-A file listing the required dependencies for the project. It includes libraries and packages needed to run the system.
 
 ### `utils.py`
 Contains helper methods that are used by `main.py` to perform various operations such as validation, data processing, and utility functions needed throughout the app.
+
+### `memory_test.py`
+Contains the code for the memory test of the application.
+
+### `regression_test.py`
+Contains the code for the regression test of the application.
+
+### `performance_test.py`
+Contains the code for the performance test of the application.
+
+### `requirements.txt`
+A file listing the required dependencies for the project. It includes libraries and packages needed to run the system.
+
+
+
 
 ## Getting Started
 
@@ -41,12 +57,60 @@ The project requires several Python libraries that are listed in `requirements.t
 pip install -r requirements.txt
 ```
 
-### 2. Run Python Code:
-Run the following command to run `randomized_quicksort`:
+### 2. Run Main Python Code:
+Run the following command to run `main.py`:
 ```bash
 python3 main.py
 ```
 
+### 3. Run Regression Test:
+Run the following command to run `regression_test.py`:
+```bash
+python3 regression_test.py
+```
+
+### 4. Run Performance Test:
+Run the following command to run `performance_test.py`:
+```bash
+python3 performance_test.py
+```
+### 5. Run Memory Test:
+Run the following command to run `memory_test.py`:
+```bash
+python3 memory_test.py
+```
+
+# Inventory Management System - Feature Documentation
+
+### Core Data Structures
+1. **Hash Table**
+   - ID-based product lookup
+   - O(1) time complexity for basic operations
+   - Collision handling with chaining
+
+2. **AVL Tree**
+   - Price-based product organization
+   - Self-balancing for optimal performance
+   - O(log n) operations
+
+### Basic Operations
+1. Insert new products
+2. Delete products
+3. Search by ID
+4. View inventory
+
+## Enhanced Features
+
+### Advanced Search Operations
+1. **Partial ID Search**
+   - Find products with partial ID match
+   - Handle multiple matches gracefully
+
+2. **Price-Based Operations**
+   - Find cheapest product
+   - Find most expensive product
+   - Search products in price range
+   - View products sorted by price
 
 
 
