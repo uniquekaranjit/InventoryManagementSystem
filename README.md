@@ -8,7 +8,7 @@ The system supports the following features:
 - **Insert**: Add new products to the inventory with details such as product ID, name, and price.
 - **Delete**: Remove products from the inventory using a unique product ID.
 - **Retrieve**: Retrieve product details based on a given product ID.
-- **Sorting**: Products are automatically sorted based on price using an AVL tree. This is yet to be implemented in next phase of the project. 
+- **Sorting**: Products are automatically sorted based on price using an AVL tree.
 
 ## Project Structure
 

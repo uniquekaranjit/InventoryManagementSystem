@@ -75,12 +75,122 @@ class AVLTree:
     def _balance(self, node):
         """
         Balances the given node if it becomes unbalanced after insertion.
-
+        
         :param node: The node to be balanced.
         :return: The balanced node.
         """
-        balance_factor = self._height(node.left) - self._height(node.right)  # Calculate balance factor.
+        if not node:
+            return node
 
-        # Placeholder: Actual balancing logic (rotations) should be implemented here.
+        # Update height
+        node.height = 1 + max(self._height(node.left), self._height(node.right))
+        
+        # Get balance factor
+        balance = self._get_balance(node)
+        
+        # Left Heavy
+        if balance > 1:
+            # Left-Right Case
+            if self._get_balance(node.left) < 0:
+                node.left = self._rotate_left(node.left)
+            # Left-Left Case
+            return self._rotate_right(node)
+            
+        # Right Heavy
+        if balance < -1:
+            # Right-Left Case
+            if self._get_balance(node.right) > 0:
+                node.right = self._rotate_right(node.right)
+            # Right-Right Case
+            return self._rotate_left(node)
+            
+        return node
 
-        return node  # Currently returns the node without balancing (needs implementation).
+    def _rotate_left(self, z):
+        """Performs a left rotation"""
+        y = z.right
+        T2 = y.left
+        
+        y.left = z
+        z.right = T2
+        
+        z.height = 1 + max(self._height(z.left), self._height(z.right))
+        y.height = 1 + max(self._height(y.left), self._height(y.right))
+        
+        return y
+        
+    def _rotate_right(self, z):
+        """Performs a right rotation"""
+        y = z.left
+        T3 = y.right
+        
+        y.right = z
+        z.left = T3
+        
+        z.height = 1 + max(self._height(z.left), self._height(z.right))
+        y.height = 1 + max(self._height(y.left), self._height(y.right))
+        
+        return y
+
+    def is_balanced(self):
+        """
+        Checks if the entire tree is balanced according to AVL rules.
+        Returns (is_balanced, height)
+        """
+        def check_balance(node):
+            if not node:
+                return True, 0
+                
+            left_balanced, left_height = check_balance(node.left)
+            right_balanced, right_height = check_balance(node.right)
+            
+            # Check if both subtrees are balanced
+            if not left_balanced or not right_balanced:
+                return False, 0
+                
+            # Check balance factor
+            balance = self._get_balance(node)
+            is_balanced = abs(balance) <= 1
+            
+            height = 1 + max(left_height, right_height)
+            
+            return is_balanced, height
+            
+        balanced, _ = check_balance(self.root)
+        return balanced
+
+    def _get_balance(self, node):
+        if not node:
+            return 0
+        return self._height(node.left) - self._height(node.right)
+
+    def find_products_in_range(self, min_price, max_price):
+        """
+        Find all products within a given price range using in-order traversal.
+        Returns a list of products with their names and prices.
+        """
+        result = []
+        
+        def inorder(node):
+            if not node:
+                return
+                
+            # If current node's price is greater than min_price,
+            # then products in left subtree may be in range
+            if node.price > min_price:
+                inorder(node.left)
+                
+            # Check if current node is within range
+            if min_price <= node.price <= max_price:
+                result.append({
+                    'name': node.product,
+                    'price': node.price
+                })
+                
+            # If current node's price is less than max_price,
+            # then products in right subtree may be in range
+            if node.price < max_price:
+                inorder(node.right)
+                
+        inorder(self.root)
+        return result
